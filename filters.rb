@@ -1,20 +1,29 @@
+class InvalidCandidateError < StandardError
+end
 # In this file we define the methods to help filter out candidates
 # This way, we keep these methods separated from other potential parts of the program
 require 'pry'
 #Takes in a hash representing a candidate ID and returns that ID
 def find(id)
+  raise 'Runtime error. @candidates must be an Array' if @candidates.nil?
   id[:id] 
 end
 
 #Takes in a hash representing a candidate and returns whether candidate 
 #  has 2 years experience or more as boolean
 def experienced?(candidate)
+  unless candidate.has_key?(:years_of_experience)
+    raise InvalidCandidateError, 'candidates must have a :years_of_experience key'
+  end
   candidate[:years_of_experience] >= 2
 end    
 
+
 #Qualifies all candidates based on having greater than 100 github points
 def github(candidate)
-  candidate[:github_points] >= 100
+  unless candidate[:github_points] >= 100
+    raise StandardError, 'candidate must have a github score'
+  end
 end
 
 #Checks hash to verify if candidate knows at least Ruby or Python
@@ -25,7 +34,9 @@ end
 
 #Checks application date of applicant
 def applydate(candidate)
-  candidate[:date_applied] >= 15.days.ago.to_date
+  unless candidate[:date_applied] >= 15.days.ago.to_date
+    raise StandardError, 'candidate applied too long ago'
+  end
 end
 
 #Checks if age of applicant is over 17

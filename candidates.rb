@@ -1,10 +1,11 @@
 require 'active_support/all'
 
+
 @candidates = [
   {
     id: 5,
-    years_of_experience: 4,
-    github_points: 293,
+    years_of_exerience: 4,
+    github_points: 0,
     languages: ['C', 'Ruby', 'Python', 'Clojure'],
     date_applied: 5.days.ago.to_date,
     age: 26
@@ -14,7 +15,7 @@ require 'active_support/all'
     years_of_experience: 1,
     github_points: 145,
     languages: ['JavaScript', 'Ruby', 'Go', 'Erlang'],
-    date_applied: 15.days.ago.to_date,
+    date_applied: 16.days.ago.to_date,
     age: 19
   },
   {
@@ -36,7 +37,7 @@ require 'active_support/all'
   {
     id: 11,
     years_of_experience: 12,
-    github_points: 32,
+    github_points: 0,
     languages: ['VB', 'Cobol', 'Fortran'],
     date_applied: 2.days.ago.to_date,
     age: 42
