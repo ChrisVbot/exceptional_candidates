@@ -22,9 +22,9 @@ def ask
     when 'qualified'
       loop do
         begin
-      puts qualified_candidates(@candidates).join("\n")
+          puts qualified_candidates(@candidates).join("\n")
         rescue InvalidCandidateError
-          puts "Candidates must have a :years_of_experience key."
+          puts "All candidates must have a :years_of_experience key."
         end
         break 
       end
@@ -33,12 +33,8 @@ def ask
     exit
     else
       puts "Command or ID not recognized"
-      begin
-    rescue InvalidCandidateError
-      puts "Candidates require a :years_of_experience key"
     end
   end
-end
 end
   
 
