@@ -5,15 +5,20 @@ end
 require 'pry'
 #Takes in a hash representing a candidate ID and returns that ID
 def find(id)
-  raise 'Runtime error. @candidates must be an Array' if @candidates.nil?
-  id[:id] 
+  @candidates.each do | candidate |
+    if candidate[:id] == id
+      return candidate      
+    end
+  end
 end
+
+# end
 
 #Takes in a hash representing a candidate and returns whether candidate 
 #  has 2 years experience or more as boolean
 def experienced?(candidate)
   unless candidate.has_key?(:years_of_experience)
-    raise InvalidCandidateError, 'candidates must have a :years_of_experience key'
+    raise InvalidCandidateError
   end
   candidate[:years_of_experience] >= 2
 end    
@@ -22,7 +27,7 @@ end
 #Qualifies all candidates based on having greater than 100 github points
 def github(candidate)
   unless candidate[:github_points] >= 100
-    raise StandardError, 'candidate must have a github score'
+    raise StandardError, 'candidate must have a github score of 100 or higher'
   end
 end
 

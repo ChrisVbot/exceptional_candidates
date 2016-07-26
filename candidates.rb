@@ -4,6 +4,7 @@ require 'active_support/all'
 @candidates = [
   {
     id: 5,
+    #note: mispelling below is intentional to test exception.
     years_of_exerience: 4,
     github_points: 0,
     languages: ['C', 'Ruby', 'Python', 'Clojure'],

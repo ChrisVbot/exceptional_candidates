@@ -7,99 +7,83 @@ require './filters'
 require 'colorize'
 
 
-# def get_input
-#   while true
-#     puts "Enter command"
-#     input = gets.strip
-#     candidates(input)
-#   end
-# end
-
-# def candidates(candidates)
-#   case candidates
+def ask
+  while true
+    puts "Enter command"
+    input = gets.chomp.split
+    command = input[0]
+    argument = input[1]
+  case command.downcase
+    when "find"
+      puts find(argument.to_i)
+    when "all"
+      puts @candidates.join("\n")
     
-#     when /find \d/
-#       candidates.split.to_s
-#       output = @candidates[/\d/]
-
-      
-      
-#       # else
-#       # output = "Candidate not found"
-#     # when 'find 7'
-#     #   output = @candidates[1]
-
-#     # when 'find 9'
-#     #   output = @candidates[2]
-
-#     # when 'find 10'
-#     #   output = @candidates[3]
-
-#     # when 'find 11'
-#     #   output = @candidates[4]
-
-#     # when 'find 15'
-#     #   output = @candidates[5]  
-
-#     when 'quit'
-#       puts 'Exiting program'
-#       exit
-    
-#     when 'qualified'
-#       output = qualified_candidates(@candidates).join("\n")
-
-#     when 'all'
-#       output = @candidates.join("\n")
-    
-#     else
-#       output = "Command or ID not recognized"
-#   end
-#   puts "#{output}"
-# end
-
+    when 'qualified'
+      loop do
+        begin
+      puts qualified_candidates(@candidates).join("\n")
+        rescue InvalidCandidateError
+          puts "Candidates must have a :years_of_experience key."
+        end
+        break 
+      end
+    when 'quit'
+    puts 'Exiting program'
+    exit
+    else
+      puts "Command or ID not recognized"
+      begin
+    rescue InvalidCandidateError
+      puts "Candidates require a :years_of_experience key"
+    end
+  end
+end
+end
+  
 
 
 # get_input
 # Your test code can go here
 # binding.pry
 # pp qualified_candidates
-@candidates.each do |candidate|
-  begin
-  if experienced?(candidate)
-    puts "Candidate #{candidate[:id]} is experienced enough."
-  else
-    puts "Candidate #{candidate[:id]} is not experienced enough."
-  end
-  rescue InvalidCandidateError => ex
-  puts "It could not be determined whether candidate #{candidate[:id]} is experienced enough."
-  puts "The reason was: #{ex.message}"
-  end
-end
+# @candidates.each do |candidate|
+#   begin
+#   if experienced?(candidate)
+#     puts "Candidate #{candidate[:id]} is experienced enough."
+#   else
+#     puts "Candidate #{candidate[:id]} is not experienced enough."
+#   end
+#   rescue InvalidCandidateError => ex
+#   puts "It could not be determined whether candidate #{candidate[:id]} is experienced enough."
+#   puts "The reason was: #{ex.message}"
+#   end
+# end
 
 
 # @candidates.each do |id|
 #   puts find(id)
 # end
 
-@candidates.each do |github_points|
-  begin
-  puts github(github_points) 
-  rescue StandardError 
-  puts "Candidates must have a github score of 100 or greater. Candidate #{github_points[:id]} does not qualify. " 
-  end 
-end
-
-# @candidates.each do |langs|
-#   puts languages(langs)
+# @candidates.each do |github_points|
+#   begin
+#   puts github(github_points) 
+#   rescue StandardError 
+#   puts "Candidates must have a github score of 100 or greater. Candidate #{github_points[:id]} does not qualify. " 
+#   end 
 # end
 
-@candidates.each do |date|
-  begin
-  puts applydate(date)
-  rescue StandardError
-  puts "Candidates must have applied within the past 15 days."
-  end 
-end
+# # @candidates.each do |langs|
+# #   puts languages(langs)
+# # end
+
+# @candidates.each do |date|
+#   begin
+#   puts applydate(date)
+#   rescue StandardError
+#   puts "Candidates must have applied within the past 15 days."
+#   end 
+# end
 
 # @candidates.each do |ages|
 #   puts applyage(ages)
@@ -117,5 +101,5 @@ end
 
 
 # puts @candidates
-
+ask
 
